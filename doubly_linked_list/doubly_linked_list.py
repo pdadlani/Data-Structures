@@ -136,4 +136,13 @@ class DoublyLinkedList:
         
     """Returns the highest value currently in the list"""
     def get_max(self):
-        pass
+        current = self.head
+        max_value = current.value
+
+        while current is not None:
+
+            if current.value > max_value:
+                max_value = current.value
+            current = current.next
+
+        return max_value
