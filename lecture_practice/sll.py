@@ -132,6 +132,19 @@ class SinglyLinkedList:
 
     return slower
 
+  def reverse(self):
+    prev_val = None
+    next_val = None
+    current = self.head
+
+    while current != None:
+      next_val = current.next
+      current.next = prev_val
+      prev_val = current
+      current = next_val
+      self.head = prev_val
+
+
   def printList(self): 
     temp = self.head 
     while(temp): 
@@ -151,3 +164,7 @@ trial.printList()
 
 a = trial.get_middle()
 print(a.value)
+
+trial.reverse()
+print("NEWWWWWWWW")
+trial.printList()
