@@ -3,6 +3,12 @@ sys.path.append('../queue_and_stack')
 from dll_queue import Queue
 from dll_stack import Stack
 
+# import sys
+# sys.path.append('./dll_queue')
+# from dll_queue import Queue
+# sys.path.append('./dll_stack')
+# from dll_stack import Stack
+
 
 class BinarySearchTree:
     def __init__(self, value):
@@ -67,16 +73,49 @@ class BinarySearchTree:
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
         # research in order print to understand what it means
-        pass
+        # left, root, right
+        if node.left:
+            self.in_order_print(node.left)
+        
+        print(node.value)
+
+        if node.right:
+            self.in_order_print(node.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        # Steps
+        # Make a queue - FIFO
+        queue = Queue()
+        # add the root to the tail of the queue - default for a queue
+        queue.enqueue(node)
+        # while the queue is not empty
+        while queue.len() > 0:
+            # pop node off the front of the queue - which is default of the queue
+            current_node = queue.dequeue()
+            # cb or print node value OR DO THING
+            print(current_node.value)
+            # if node has left, add to tail of the queue
+            if current_node.left:
+                queue.enqueue(current_node.left)
+            # if node has right, add to tail of the queue
+            if current_node.right:
+                queue.enqueue(current_node.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
+        # Steps:
+
+        # Make a stack - LIFO
+        # add the root to the head of stack - default for stack
+        # while the stack is not empty
+        # pop the node off the head of the stack - which is default for a stack
+        # cb or print the value of the node or DO TH(ING)
+        # if the node has a left, add the left to the stack
+        # if the node has a right, add the right to the stack
+
         pass
 
     # STRETCH Goals -------------------------
@@ -84,8 +123,10 @@ class BinarySearchTree:
 
     # Print In-order recursive DFT
     def pre_order_dft(self, node):
+        # root, left, right
         pass
 
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
+        # left, right, root
         pass
