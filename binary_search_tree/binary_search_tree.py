@@ -3,13 +3,6 @@ sys.path.append('../queue_and_stack')
 from dll_queue import Queue
 from dll_stack import Stack
 
-# import sys
-# sys.path.append('./dll_queue')
-# from dll_queue import Queue
-# sys.path.append('./dll_stack')
-# from dll_stack import Stack
-
-
 class BinarySearchTree:
     def __init__(self, value):
         self.value = value
@@ -85,7 +78,6 @@ class BinarySearchTree:
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        # Steps
         # Make a queue - FIFO
         queue = Queue()
         # add the root to the tail of the queue - default for a queue
@@ -106,9 +98,8 @@ class BinarySearchTree:
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        # Steps:
-
         # Make a stack - LIFO
+        stack = Stack()
         # add the root to the head of stack - default for stack
         # while the stack is not empty
         # pop the node off the head of the stack - which is default for a stack
