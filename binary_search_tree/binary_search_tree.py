@@ -101,13 +101,20 @@ class BinarySearchTree:
         # Make a stack - LIFO
         stack = Stack()
         # add the root to the head of stack - default for stack
+        stack.push(node)
         # while the stack is not empty
-        # pop the node off the head of the stack - which is default for a stack
-        # cb or print the value of the node or DO TH(ING)
-        # if the node has a left, add the left to the stack
-        # if the node has a right, add the right to the stack
-
-        pass
+        while stack.len() > 0:
+            # pop the node off the head of the stack - which is default for a stack
+            current_node = stack.pop()
+            # cb or print the value of the node or DO TH(ING)
+            print(current_node.value)
+            # if the node has a left, add the left to the stack
+            if current_node.left:
+                stack.push(current_node.left)
+            # if the node has a right, add the right to the stack
+            if current_node.right:
+                stack.push(current_node.right)
+                
 
     # STRETCH Goals -------------------------
     # Note: Research may be required
