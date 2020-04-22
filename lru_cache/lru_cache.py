@@ -57,25 +57,22 @@ class LRUCache:
             node = self.storage[key]
             node.value = (key, value)
             self.pairs.move_to_end(node)
+            return
 
-        # else if the cache is filled
-        elif self.size == self.limit:
+        # if the cache is filled
+        if self.size == self.limit:
             # delete the oldest data point, aka the one at the front of the DLL & in the dict
+            # and decrement the size
             del self.storage[self.pairs.head.value[0]]
             self.pairs.remove_from_head()
-            # and add this new key-value pair
-            node = (key, value)
-            self.pairs.add_to_tail(node)
-            self.storage[key] = self.pairs.tail
+            self.size -= 1
 
-        # else, knowing there is space
-        else:
-            # add this new key-value pair, and increment the count
-            # node = self.storage[key]
-            # node.value = (key, value)
-            self.pairs.add_to_tail((key, value))
-            self.storage[key] = self.pairs.tail
-            self.size += 1
+
+        # otherwise, knowing there is space
+        # add this new key-value pair, and increment the size
+        self.pairs.add_to_tail((key, value))
+        self.storage[key] = self.pairs.tail
+        self.size += 1
 
 
 cache = LRUCache(3)
