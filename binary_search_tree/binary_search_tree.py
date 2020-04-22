@@ -26,7 +26,7 @@ class BinarySearchTree:
             if self.left is None:
                 self.left = BinarySearchTree(value)
             else:
-                return self.left.insert(value)
+                self.left.insert(value)
         # else if value of new node is >= value of root
         # there is no need to actually check this, but it's nice
         elif value >= self.value:
@@ -35,7 +35,7 @@ class BinarySearchTree:
             if self.right is None:
                 self.right = BinarySearchTree(value)
             else:
-                return self.right.insert(value)
+                self.right.insert(value)
 
     # Return True if the tree contains the value
     # False if it does not
@@ -84,7 +84,15 @@ class BinarySearchTree:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
-        pass
+        # print left, root, then right
+        # if there is a left, traverse the left
+        if node.left:
+           self.in_order_print(node.left)
+        # then print the 'root'
+        print(node.value)
+        # if there is a right, traverse the right
+        if node.right:
+            self.in_order_print(node.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
@@ -101,16 +109,37 @@ class BinarySearchTree:
 
     # Print Pre-order recursive DFT
     def pre_order_dft(self, node):
-        pass
+        # root, left, then right
+        print(node.value)
+        if node.left:
+            self.pre_order_dft(node.left)
+        if node.right:
+            self.pre_order_dft(node.right)
 
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
-        pass
+        # left, right, then root
+        if node.left:
+            self.post_order_dft(node.left)
+        if node.right:
+            self.post_order_dft(node.right)
+        print(node.value)
 
 
-bst = BinarySearchTree(7)
-bst.insert(5)
+# bst = BinarySearchTree(7)
+# bst.insert(5)
+# bst.insert(8)
+# bst.insert(4)
+# bst.insert(6)
+# bst.get_max()
+
+bst = BinarySearchTree(1)
 bst.insert(8)
-bst.insert(4)
+bst.insert(5)
+bst.insert(7)
 bst.insert(6)
-bst.get_max()
+bst.insert(3)
+bst.insert(4)
+bst.insert(2)
+
+bst.in_order_print(bst)
