@@ -26,7 +26,7 @@ class BinarySearchTree:
             if self.left is None:
                 self.left = BinarySearchTree(value)
             else:
-                self.left.insert(value)
+                return self.left.insert(value)
         # else if value of new node is >= value of root
         # there is no need to actually check this, but it's nice
         elif value >= self.value:
@@ -35,16 +35,44 @@ class BinarySearchTree:
             if self.right is None:
                 self.right = BinarySearchTree(value)
             else:
-                self.right.insert(value)
+                return self.right.insert(value)
 
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        pass
+        # if node is None:
+        # return false
+        # if node.value == target:
+        if self.value == target:
+        # return true
+            return True
+        # else
+        else:
+            # if target is < node.value:
+            if target < self.value:
+                # if there is a left
+                if self.left:
+                    # find the target on left bst
+                    return self.left.contains(target)
+            # else aka target is >= node.value:
+            else:
+                # if there is a right
+                if self.right:
+                    # find the target on the right bst
+                    return self.right.contains(target)
+        return False
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+        # if tree is empty, return None
+        if self.value is None:
+            return None
+        # if self.right is None, return self.value
+        if self.right is None:
+            return self.value
+        # else call get_max on self.right
+        else:
+            return self.right.get_max()
 
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
@@ -85,3 +113,4 @@ bst.insert(5)
 bst.insert(8)
 bst.insert(4)
 bst.insert(6)
+bst.get_max()
