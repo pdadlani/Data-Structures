@@ -1,5 +1,5 @@
-# import sys
-# sys.path.append('../doubly_linked_list')
+import sys
+sys.path.append('../doubly_linked_list')
 from doubly_linked_list import DoublyLinkedList
 
 class LRUCache:
@@ -11,7 +11,14 @@ class LRUCache:
     to every node stored in the cache.
     """
     def __init__(self, limit=10):
-        pass
+        # limit represents max number of nodes the cache can hold
+        self.limit = limit
+        # size represents the current number of nodes in cache
+        self.size = 0
+        # pairs is a DLL that holds the key-value pairs
+        self.pairs = DoublyLinkedList()
+        # storage allows for quick access / search of key-value pair
+        self.storage = {}
 
     """
     Retrieves the value associated with the given key. Also
@@ -21,7 +28,17 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
-        pass
+        # if the key exists
+        if key in self.storage:
+            # save it's data / entire node to a variable
+            node = self.storage[key]
+            # so you can move the node to the end of the DLL
+            # making it 'mose-recently used'
+            self.pairs.move_to_end(node)
+            # return the data you want
+            return node.value[1]
+        # if the key does not exist, return None
+        return None
 
     """
     Adds the given key-value pair to the cache. The newly-
@@ -34,4 +51,36 @@ class LRUCache:
     the newly-specified value.
     """
     def set(self, key, value):
-        pass
+        # if the key is in the existing data structure
+        if key in self.storage:
+            # get the node, update the value of the node, and move to end of dll
+            node = self.storage[key]
+            node.value = (key, value)
+            self.pairs.move_to_end(node)
+
+        # else if the cache is filled
+        elif self.size == self.limit:
+            # delete the oldest data point, aka the one at the front of the DLL & in the dict
+            del self.storage[self.pairs.head.value[0]]
+            self.pairs.remove_from_head()
+            # and add this new key-value pair
+            node = (key, value)
+            self.pairs.add_to_tail(node)
+            self.storage[key] = self.pairs.tail
+
+        # else, knowing there is space
+        else:
+            # add this new key-value pair, and increment the count
+            # node = self.storage[key]
+            # node.value = (key, value)
+            self.pairs.add_to_tail((key, value))
+            self.storage[key] = self.pairs.tail
+            self.size += 1
+
+
+cache = LRUCache(3)
+cache.set('1', 'a')
+cache.get('1')
+cache.set('2', 'b')
+cache.set('3', 'c')
+cache.set('2', 'wtf')
