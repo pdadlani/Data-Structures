@@ -9,10 +9,10 @@ class Stack:
         self.storage = DoublyLinkedList()
 
     def push(self, value):
-        self.storage.add_to_head(value)
+        self.storage.add_to_tail(value)
 
     def pop(self):
-        return self.storage.remove_from_head()
+        return self.storage.remove_from_tail()
 
     def len(self):
         return self.storage.get_length()

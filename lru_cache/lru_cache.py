@@ -1,5 +1,5 @@
-# import sys
-# sys.path.append('../doubly_linked_list')
+import sys
+sys.path.append('../doubly_linked_list')
 from doubly_linked_list import DoublyLinkedList
 
 class LRUCache:
@@ -11,10 +11,14 @@ class LRUCache:
     to every node stored in the cache.
     """
     def __init__(self, limit=10):
+        # limit represents max number of nodes the cache can hold
         self.limit = limit
+        # size represents the current number of nodes in cache
         self.size = 0
-        self.order = DoublyLinkedList()
-        self.storage = dict()
+        # pairs is a DLL that holds the key-value pairs
+        self.pairs = DoublyLinkedList()
+        # storage allows for quick access / search of key-value pair
+        self.storage = {}
 
     """
     Retrieves the value associated with the given key. Also
@@ -24,12 +28,17 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
+        # if the key exists
         if key in self.storage:
+            # save it's data / entire node to a variable
             node = self.storage[key]
-            self.order.move_to_end(node)
+            # so you can move the node to the end of the DLL
+            # making it 'mose-recently used'
+            self.pairs.move_to_end(node)
+            # return the data you want
             return node.value[1]
-        else:
-            return None
+        # if the key does not exist, return None
+        return None
 
     """
     Adds the given key-value pair to the cache. The newly-
@@ -42,26 +51,33 @@ class LRUCache:
     the newly-specified value.
     """
     def set(self, key, value):
-        
-        # Check the length & if at the limit, delete the  
-        # do not need to do the above?
-
-        # Check and see if key is in the cache
+        # if the key is in the existing data structure
         if key in self.storage:
+            # get the node, update the value of the node, and move to end of dll
             node = self.storage[key]
             node.value = (key, value)
-            self.order.move_to_end(node)
+            self.pairs.move_to_end(node)
             return
 
-        # If it is in the cache, move to front and update value
+        # if the cache is filled
         if self.size == self.limit:
-            del self.storage[self.order.head.value[0]]
-            self.order.remove_from_head()
+            # delete the oldest data point, aka the one at the front of the DLL & in the dict
+            # and decrement the size
+            del self.storage[self.pairs.head.value[0]]
+            self.pairs.remove_from_head()
             self.size -= 1
 
 
-        # If not in cache, add to the front of cache w/ its value
-        # Defining tail as most recent and head as oldest
-        self.order.add_to_tail((key, value))
-        self.storage[key] = self.order.tail
+        # otherwise, knowing there is space
+        # add this new key-value pair, and increment the size
+        self.pairs.add_to_tail((key, value))
+        self.storage[key] = self.pairs.tail
         self.size += 1
+
+
+cache = LRUCache(3)
+cache.set('1', 'a')
+cache.get('1')
+cache.set('2', 'b')
+cache.set('3', 'c')
+cache.set('2', 'wtf')
