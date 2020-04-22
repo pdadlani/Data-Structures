@@ -49,7 +49,7 @@ class BinarySearchTree:
             # find the target on left bst
             return self.left.contains(target)
         # else if target is >= node.value AND there is a right:
-        elif target >= self.value and self.right:
+        elif target > self.value and self.right:
             # find the target on the right bst
             return self.right.contains(target)
         return False
