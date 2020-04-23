@@ -79,6 +79,36 @@ class BinarySearchTree:
         if self.right:
             self.right.for_each(cb)
 
+    def depth_first_iterative_for_each(self, cb):
+        stack = []
+        # add the root of the tree to the stack
+        stack.append(self)
+
+        # loop so long as the stack still has elements
+        while len(stack) > 0:
+            current_node = stack.pop()
+            # check if the right child exists
+            if current_node.right:
+                stack.append(current_node.right)
+            # check if the left child exists
+            if current_node.left:
+                stack.append(current_node.left)
+            cb(current_node.value)
+
+    def breadth_first_iterative_for_each(self, cb):
+        # depth-first : stack
+        # breadth-first : queue
+        q = Queue()
+        q.enqueue(self)
+
+        while len(q) > 0:
+            current_node = q.dequeue()
+            if current_node.left:
+                q.enqueue(current_node.left)
+            if current_node.right:
+                q.enqueue(current_node.right)
+            cb(current_node.value)
+
     # DAY 2 Project -----------------------
 
     # Print all the values in order from low to high
@@ -87,7 +117,7 @@ class BinarySearchTree:
         # print left, root, then right
         # if there is a left, traverse the left
         if node.left:
-           self.in_order_print(node.left)
+            self.in_order_print(node.left)
         # then print the 'root'
         print(node.value)
         # if there is a right, traverse the right
@@ -97,7 +127,26 @@ class BinarySearchTree:
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        # FIFO aka a queue
+        # instantiate a queue
+        queue = Queue()
+        # add the node to the queue
+        queue.enqueue(node)
+
+        # while the length of the queue is not 0
+        while queue.len() > 0:
+            # remove the first node from queue
+            current_node = queue.dequeue()
+            # print the value of the node
+            print(current_node.value)
+            # if node has a left
+            if current_node.left:
+                # add the left to the queue
+                queue.enqueue(current_node.left)
+            # if the node has a right,
+            if current_node.right:
+                # add the right to the queue
+                queue.enqueue(current_node.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
